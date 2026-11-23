@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+import { app, BrowserWindow } from 'electron';
 
 const criarJanela = () => {
     const janela = new BrowserWindow({
@@ -6,7 +6,7 @@ const criarJanela = () => {
         height: 600
     });
 
-    janela.loadFile('../renderer/frmPrincipal.html');
+    janela.loadFile('../../src/renderer/frmPrincipal.html');
 };
 
 app.whenReady().then(criarJanela);
