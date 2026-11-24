@@ -1,24 +1,55 @@
 {
-  "name": "projeto-final-buffet",
+  "name": "buffet-manager-dad",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
-    "start": "npm run build && electron dist/main/main.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "description": "Sistema de gestÃ£o de buffet e eventos para um computador",
+  "main": "dist/main/main.js",
   "type": "commonjs",
+  "author": "Projeto final - DAD",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "npm run build:ts && electron .",
+    "dist": "npm run build:ts && electron-builder --win nsis",
+    "check": "npm run check:ts",
+    "check:ts": "tsc --noEmit",
+    "build:ts": "tsc && node --check dist/renderer/renderer.js",
+    "db:init": "node scripts/init-mysql.js",
+    "test": "npm run check",
+    "populate:event-costs": "npm run build:ts && node scripts/populate-event-costs.js",
+    "admin:reset": "node scripts/reset-admin.js"
+  },
   "dependencies": {
-    "axios": "^1.21.1",
-    "bootstrap": "^5.3.9",
-    "electron": "^45.4.1"
+    "mysql2": "^3.24.6",
+    "bcryptjs": "^2.4.3",
+    "nodemailer": "^6.10.1"
   },
   "devDependencies": {
-    "@types/node": "^26.6.6",
-    "typescript": "^7.0.2"
+    "@types/node": "^22.0.0",
+    "electron": "^45.3.4",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.7.0"
+  },
+  "build": {
+    "appId": "br.com.buffetmanager.desktop",
+    "productName": "Buffet Manager",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/renderer/**/*",
+      "database/migrations/**/*",
+      "database/seeds/**/*",
+      "package.json",
+      "README.md",
+      ".env.example"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
